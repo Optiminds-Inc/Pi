@@ -43,7 +43,11 @@ export function ThemeToggleIcon({ className = "" }: { className?: string }) {
         className,
       ].join(" ")}
     >
-      <SunIcon className={mounted && isDark ? "block" : "hidden"} />
+      <SunIcon
+        className={
+          mounted && isDark ? "block text-mondrian-yellow" : "hidden"
+        }
+      />
       <MoonIcon className={!mounted || !isDark ? "block" : "hidden"} />
     </button>
   );
