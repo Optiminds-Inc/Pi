@@ -161,7 +161,7 @@ function Hero() {
                 &rarr;
               </span>
             </Link>
-            <Link href="/home" className="btn-ghost group !text-mondrian-yellow hover:!text-mondrian-yellow">
+            <Link href="/home" className="btn-ghost group !text-mondrian-yellow hover:!text-mondrian-yellow !text-[17px] !font-semibold">
               Explore a sample dashboard
               <span aria-hidden className="arrow text-[12px]">
                 &rarr;
@@ -692,7 +692,7 @@ function HowItWorks() {
             Every dollar, every article, every lead — surfaced live, the moment
             it happens.
           </span>
-          <Link href="/home" className="btn-ghost group">
+          <Link href="/home" className="btn-ghost group !text-mondrian-yellow hover:!text-mondrian-yellow !text-[17px] !font-semibold">
             Explore a sample dashboard
             <span aria-hidden className="arrow text-[12px]">
               &rarr;
