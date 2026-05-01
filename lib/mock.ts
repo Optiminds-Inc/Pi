@@ -53,8 +53,8 @@ export type Agent = {
 export const agents: Agent[] = [
   {
     id: "ads",
-    name: "Ads",
-    fullName: "Ads Agent",
+    name: "Search ad pacer",
+    fullName: "Search ad pacer",
     tagline: "Runs your Google Search Ads — keyword bids, daily budgets, and ad copy, optimized against cost per signed case.",
     role: "Runs your Google Search Ads end to end — keyword bidding, budget allocation, ad copy, and campaign pacing. Optimizes daily against cost per signed case.",
     channels: ["Google Search Ads"],
@@ -71,8 +71,8 @@ export const agents: Agent[] = [
   },
   {
     id: "seo",
-    name: "SEO",
-    fullName: "SEO Agent",
+    name: "Article writer",
+    fullName: "Article writer",
     tagline: "Writes and ships articles tuned for Google organic ranking — keyword-targeted, on-page optimized, refreshed quarterly.",
     role: "Writes and ships articles tuned for Google organic ranking. Keyword-targeted, on-page optimized, internally linked, refreshed quarterly to hold position.",
     channels: ["Google organic"],
@@ -89,8 +89,8 @@ export const agents: Agent[] = [
   },
   {
     id: "geo",
-    name: "GEO",
-    fullName: "GEO Agent",
+    name: "AI brief writer",
+    fullName: "AI brief writer",
     tagline: "Drafts answer-first briefs cited by ChatGPT, Perplexity, and Claude when prospects ask AI for a Houston PI lawyer.",
     role: "Writes articles tuned to be cited by ChatGPT, Perplexity, Claude, and other generative engines. Different style than SEO — answer-first, citation-heavy, structured for LLM extraction.",
     channels: ["ChatGPT", "Perplexity", "Claude"],
@@ -284,7 +284,7 @@ export const activity: Activity[] = [
   {
     id: "a1",
     agent: "seo",
-    channel: "SEO",
+    channel: "Google organic",
     title: "Published 3 articles on brain injury settlements",
     detail: "Targeting Houston, Sugar Land, and The Woodlands.",
     outcome: "Indexed by Google within 4 hours.",
@@ -345,7 +345,7 @@ export const activity: Activity[] = [
   {
     id: "a6",
     agent: "seo",
-    channel: "SEO",
+    channel: "Google organic",
     title: "Refreshed 'Brain injury TBI compensation Texas' article",
     detail: "Added 2026 verdict data and updated insurer caps.",
     outcome: "Now ranks #3 (up from #7) for primary keyword.",
@@ -502,7 +502,7 @@ export const activity: Activity[] = [
   {
     id: "a23",
     agent: "seo",
-    channel: "SEO",
+    channel: "Google organic",
     title: "Optimized 'Houston motorcycle accident' — readability 78 → 92",
     detail: "Shortened paragraphs, added 4 H2 headers, simplified legal terms.",
     outcome: "Now ranks #6 (up from #11) for primary keyword.",

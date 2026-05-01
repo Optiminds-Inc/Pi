@@ -164,18 +164,24 @@ function CoverHero({
     }
   }, [editing]);
 
-  const covers: Record<AgentId, React.CSSProperties> = {
-    ads: { background: "linear-gradient(135deg, #fdf9f4 0%, #f7efe3 100%)" },
-    seo: { background: "linear-gradient(135deg, #f5f9f6 0%, #e8f0ea 100%)" },
-    geo: { background: "linear-gradient(135deg, #f6f4fa 0%, #ede8f4 100%)" },
-  };
-
   return (
     <div className="relative">
-      <div className="h-[200px] w-full" style={covers[agentId]} />
+      <div className="relative h-[200px] w-full overflow-hidden">
+        {agentId === "ads" ? (
+          <MondrianArt />
+        ) : agentId === "seo" ? (
+          <MorandiArt />
+        ) : (
+          <MonetArt />
+        )}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-black/[0.08] to-transparent"
+        />
+      </div>
 
       <div className="px-8 pt-5 pb-2">
-        <div className="-mt-16">
+        <div className="relative z-10 -mt-16">
           <AgentAvatar agentId={agentId} size="hero" />
         </div>
         <div className="mt-4">
@@ -227,6 +233,127 @@ function CoverHero({
   );
 }
 
+function MondrianArt() {
+  const LINE = "#1a1a1a";
+  const lineW = 3;
+  return (
+    <div className="absolute inset-0" style={{ background: "#f6f1e3" }}>
+      <div
+        className="absolute"
+        style={{
+          top: 0,
+          left: "62%",
+          right: 0,
+          height: "52%",
+          background: "#284a85",
+        }}
+      />
+      <div
+        className="absolute"
+        style={{
+          top: "52%",
+          left: "62%",
+          width: "16%",
+          bottom: 0,
+          background: "#e7b536",
+        }}
+      />
+      <div
+        className="absolute"
+        style={{
+          top: "52%",
+          left: "78%",
+          right: 0,
+          bottom: 0,
+          background: "#bf3328",
+        }}
+      />
+      <div
+        className="absolute"
+        style={{
+          top: 0,
+          bottom: 0,
+          left: `calc(62% - ${lineW / 2}px)`,
+          width: lineW,
+          background: LINE,
+        }}
+      />
+      <div
+        className="absolute"
+        style={{
+          top: `calc(52% - ${lineW / 2}px)`,
+          left: "62%",
+          right: 0,
+          height: lineW,
+          background: LINE,
+        }}
+      />
+      <div
+        className="absolute"
+        style={{
+          top: "52%",
+          bottom: 0,
+          left: `calc(78% - ${lineW / 2}px)`,
+          width: lineW,
+          background: LINE,
+        }}
+      />
+    </div>
+  );
+}
+
+function MorandiArt() {
+  const bottles: Array<{
+    left: string;
+    width: string;
+    height: string;
+    color: string;
+  }> = [
+    { left: "32%", width: "10%", height: "62%", color: "#a8b6a4" },
+    { left: "44%", width: "13%", height: "80%", color: "#bea495" },
+    { left: "59%", width: "9%", height: "55%", color: "#d2c088" },
+    { left: "70%", width: "12%", height: "72%", color: "#b6a17e" },
+    { left: "84%", width: "10%", height: "65%", color: "#a4abb4" },
+  ];
+  return (
+    <div className="absolute inset-0" style={{ background: "#ece2cf" }}>
+      {bottles.map((b, i) => (
+        <div
+          key={i}
+          className="absolute"
+          style={{
+            bottom: 0,
+            left: b.left,
+            width: b.width,
+            height: b.height,
+            background: b.color,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function MonetArt() {
+  return (
+    <div
+      className="absolute inset-0"
+      style={{
+        background: [
+          "radial-gradient(circle at 12% 18%, rgba(170, 195, 235, 0.6), transparent 42%)",
+          "radial-gradient(circle at 78% 22%, rgba(225, 195, 230, 0.55), transparent 45%)",
+          "radial-gradient(circle at 44% 70%, rgba(195, 225, 200, 0.55), transparent 48%)",
+          "radial-gradient(circle at 92% 60%, rgba(245, 215, 220, 0.50), transparent 45%)",
+          "radial-gradient(circle at 28% 52%, rgba(220, 210, 240, 0.50), transparent 50%)",
+          "radial-gradient(circle at 8% 90%, rgba(200, 220, 195, 0.45), transparent 42%)",
+          "radial-gradient(circle at 65% 92%, rgba(210, 220, 240, 0.45), transparent 45%)",
+          "linear-gradient(180deg, #ecf0f6 0%, #e2e7ef 100%)",
+        ].join(","),
+      }}
+    />
+  );
+}
+
 function PencilIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -262,7 +389,7 @@ function AgentAvatar({
   const letter = { ads: "A", seo: "S", geo: "G" }[agentId];
   const dim =
     size === "hero"
-      ? "h-[88px] w-[88px] text-[36px] rounded-[22px]"
+      ? "h-[88px] w-[88px] text-[36px] rounded-full"
       : size === "lg"
         ? "h-[64px] w-[64px] text-[26px] rounded-[14px]"
         : "h-[26px] w-[26px] text-[11px] rounded-[7px]";

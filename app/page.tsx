@@ -1,4 +1,8 @@
 import Link from "next/link";
+import { ThemeToggleIcon } from "@/components/ThemeToggle";
+import { OnboardingSteps } from "@/components/OnboardingSteps";
+import { OutcomeBlock } from "@/components/OutcomeBlock";
+import { BookingForm } from "@/components/BookingForm";
 
 export default function Home() {
   return (
@@ -23,7 +27,7 @@ export default function Home() {
 function SiteHeader() {
   return (
     <header className="glass-nav sticky top-0 z-30">
-      <div className="mx-auto flex h-[52px] w-full max-w-[1200px] items-center justify-between px-8">
+      <div className="flex h-[52px] w-full items-center justify-between px-8">
         <Link
           href="/"
           className="font-logo text-[20px] leading-none text-ink-1 transition-opacity hover:opacity-70"
@@ -53,8 +57,9 @@ function SiteHeader() {
             href="/home"
             className="transition-colors duration-150 hover:text-ink-1"
           >
-            See it live
+            Sample dashboard
           </Link>
+          <ThemeToggleIcon className="-mx-1.5" />
           <Link
             href="/book"
             className="inline-flex h-[32px] items-center rounded-md bg-ink-1 px-4 text-[13px] font-medium text-paper transition-colors duration-200 hover:bg-accent-hover"
@@ -92,7 +97,7 @@ function Hero() {
         <div className="animate-fade-in">
           <div className="mb-9 inline-flex items-center gap-2 rounded-md border border-line bg-paper-2 px-3 py-1 text-[12px] text-ink-3">
             <span className="dot dot-success" />
-            How PI firms win clients in the age of AI
+            How PI lawyers win clients in the age of AI
           </div>
 
           <h1 className="font-display text-ink-1">
@@ -116,8 +121,8 @@ function Hero() {
                 lineHeight: "1.2",
               }}
             >
-              Built for every <span className="text-info">P</span>
-              ersonal <span className="text-info">i</span>njury firm.
+              Built for every <span className="font-logo text-info">P</span>
+              ersonal <span className="font-logo text-info">i</span>njury lawyer.
             </span>
           </h1>
 
@@ -125,12 +130,23 @@ function Hero() {
             className="mt-8 max-w-[520px] text-ink-2"
             style={{ fontSize: "16px", lineHeight: "1.65" }}
           >
-            In one 30-minute call, Pi plans your six channels — Google Search
-            Ads, Business Profile, Maps, SEO, AI Search, and Social. The moment
-            onboarding wraps, your AI team is running and optimizing every
-            channel, every day.{" "}
+            Pi makes your future clients{" "}
             <span className="text-ink-1">
-              You watch every move and adjust whenever you want
+              visible, predictable, and in your control
+            </span>
+            . The AI marketing team for every solo, small, and mid-size PI
+            firm — with the same digital marketing power as the biggest.
+          </p>
+          <p
+            className="mt-5 max-w-[520px] text-ink-2"
+            style={{ fontSize: "16px", lineHeight: "1.65" }}
+          >
+            One call to onboard your AI marketing team. We handle every setup
+            — Google Search Ads, Business Profile, Maps, SEO, AI Search, and
+            Social. After that,{" "}
+            <span className="text-ink-1">
+              you watch every move and outcome in real time — and adjust your
+              strategy whenever you want
             </span>
             .
           </p>
@@ -145,8 +161,8 @@ function Hero() {
                 &rarr;
               </span>
             </Link>
-            <Link href="/home" className="btn-ghost group">
-              See a live dashboard
+            <Link href="/home" className="btn-ghost group !text-mondrian-yellow hover:!text-mondrian-yellow">
+              Explore a sample dashboard
               <span aria-hidden className="arrow text-[12px]">
                 &rarr;
               </span>
@@ -181,7 +197,7 @@ function HeroPreview() {
             <span className="text-[12px] font-medium text-ink-1">Home</span>
           </div>
           <div className="flex items-center gap-1.5 rounded-md border border-line bg-paper-2 px-2.5 py-[3px] text-[11px] text-ink-3">
-            <span className="dot-live" />
+            <span className="dot-live-red" />
             <span className="ml-2.5">Live</span>
           </div>
         </div>
@@ -302,10 +318,10 @@ function PreviewActivity({
   when: string;
 }) {
   const dotCls: Record<string, string> = {
-    content: "dot-success",
-    ads: "dot-info",
+    content: "dot-mondrian-blue",
+    ads: "dot-mondrian-yellow",
     local: "dot-warning",
-    ai: "dot-running",
+    ai: "dot-mondrian-red",
     running: "",
   };
   return (
@@ -563,7 +579,7 @@ function HowItWorks() {
       mark: "Day 0 · 30 minutes",
       title: "We map your firm in one call.",
       body:
-        "You and a Pi partner — no SDR, no slide deck. We diagnose where you are, agree on which of the six channels to set up first, and price every line. You leave with a written plan and a fixed price.",
+        "Our specialist team — lawyers, product, and engineering — meets you on one call. They understand your branding, your goals, and what you need, fast. You leave with a written plan and a fixed price.",
       tag: "Live with you",
     },
     {
@@ -589,7 +605,7 @@ function HowItWorks() {
       <div className="mx-auto w-full max-w-[1200px] px-8 py-24 md:py-32">
         <div className="mb-16 grid gap-8 md:grid-cols-[1fr_1fr] md:items-end md:gap-12">
           <div>
-            <div className="eyebrow">How Pi works</div>
+            <div className="eyebrow">How <span className="normal-case">Pi</span> works</div>
             <h2 className="font-display mt-5 text-ink-1">
               <span
                 className="block"
@@ -623,10 +639,17 @@ function HowItWorks() {
         </div>
 
         <ol className="grid gap-px overflow-hidden rounded-[12px] border border-line bg-line shadow-[var(--shadow-sm)] md:grid-cols-3">
-          {steps.map((s, i) => (
+          {steps.map((s, i) => {
+            const stepColor =
+              i === 0
+                ? "text-mondrian-yellow"
+                : i === 1
+                  ? "text-mondrian-blue"
+                  : "text-mondrian-red";
+            return (
             <li key={s.n} className="relative flex flex-col bg-paper p-8">
               <div className="flex items-center gap-3">
-                <span className="font-display text-[28px] text-ink-5 tabular leading-none">
+                <span className={`font-display text-[28px] ${stepColor} tabular leading-none`}>
                   {s.n}
                 </span>
                 <div className="flex-1 border-t border-line" aria-hidden />
@@ -660,7 +683,8 @@ function HowItWorks() {
                 </div>
               </div>
             </li>
-          ))}
+            );
+          })}
         </ol>
 
         <div className="card mt-10 flex flex-wrap items-center justify-between gap-6 px-7 py-5 text-[14px] text-ink-2">
@@ -669,7 +693,7 @@ function HowItWorks() {
             it happens.
           </span>
           <Link href="/home" className="btn-ghost group">
-            See a live dashboard
+            Explore a sample dashboard
             <span aria-hidden className="arrow text-[12px]">
               &rarr;
             </span>
@@ -873,7 +897,7 @@ function Pricing() {
           </div>
           <Link
             href="/book"
-            className="text-info transition-colors duration-150 hover:text-[#1b6ec2]"
+            className="text-info transition-colors duration-150 hover:text-info-hover"
           >
             See full pricing details &rarr;
           </Link>
@@ -904,50 +928,44 @@ function CheckMini() {
 
 function FinalCTA() {
   return (
-    <section className="border-t border-line">
-      <div className="mx-auto w-full max-w-[1200px] px-8 py-28">
-        <div className="grid gap-12 md:grid-cols-[1.25fr_1fr] md:items-end md:gap-16">
-          <h2 className="font-display text-ink-1">
-            <span
-              className="block text-balance"
-              style={{
-                fontSize: "clamp(28px, 3vw, 42px)",
-                fontWeight: 700,
-                letterSpacing: "-0.04em",
-                lineHeight: "1.1",
-              }}
-            >
-              Thirty minutes to stop guessing
-            </span>
-            <span
-              className="mt-2 block text-ink-3 text-balance"
-              style={{
-                fontSize: "clamp(20px, 2.2vw, 30px)",
-                fontWeight: 500,
-                letterSpacing: "-0.02em",
-                lineHeight: "1.2",
-              }}
-            >
-              where next month&rsquo;s clients come from.
-            </span>
-          </h2>
-          <div className="flex flex-wrap items-center gap-4">
-            <Link href="/book" className="btn-primary group">
-              Book an onboarding call
-              <span
-                aria-hidden
-                className="transition-transform duration-200 group-hover:translate-x-[3px]"
-              >
-                &rarr;
-              </span>
-            </Link>
-            <Link href="/home" className="btn-ghost group">
-              Or see a live dashboard
-              <span aria-hidden className="arrow text-[12px]">
-                &rarr;
-              </span>
-            </Link>
+    <section id="book" className="border-t border-line">
+      <div className="mx-auto w-full max-w-[1200px] px-8 py-24 md:py-28">
+        <h2 className="font-display max-w-[760px] text-ink-1">
+          <span
+            className="block text-balance"
+            style={{
+              fontSize: "clamp(28px, 3vw, 42px)",
+              fontWeight: 700,
+              letterSpacing: "-0.04em",
+              lineHeight: "1.1",
+            }}
+          >
+            Thirty minutes to stop guessing
+          </span>
+          <span
+            className="mt-2 block text-balance text-ink-3"
+            style={{
+              fontSize: "clamp(20px, 2.2vw, 30px)",
+              fontWeight: 500,
+              letterSpacing: "-0.02em",
+              lineHeight: "1.2",
+            }}
+          >
+            where next month&rsquo;s clients come from.
+          </span>
+        </h2>
+
+        <div className="mt-14 grid gap-12 md:grid-cols-[1fr_1fr] md:gap-16">
+          <div>
+            <OutcomeBlock />
+            <div className="mt-10">
+              <OnboardingSteps
+                heading="What we set up for you"
+                showAfter={false}
+              />
+            </div>
           </div>
+          <BookingForm className="animate-scale-in self-start" />
         </div>
       </div>
     </section>

@@ -1,11 +1,13 @@
-import { ONBOARDING_STEPS, ONBOARDING_AFTER } from "@/lib/onboarding";
+import { ONBOARDING_STEPS, ONBOARDING_OUTCOME } from "@/lib/onboarding";
 
 export function OnboardingSteps({
   heading = "What we do",
   compact = false,
+  showAfter = true,
 }: {
   heading?: string;
   compact?: boolean;
+  showAfter?: boolean;
 }) {
   return (
     <div>
@@ -33,18 +35,30 @@ export function OnboardingSteps({
           </li>
         ))}
       </ol>
-      <div className={compact ? "mt-7 border-t border-line pt-5" : "mt-9 border-t border-line pt-7"}>
-        <div className="eyebrow">After that</div>
-        <p
+      {showAfter && (
+        <div
           className={
             compact
-              ? "mt-2.5 text-[13.5px] leading-[1.6] text-ink-2"
-              : "mt-3 text-[14.5px] leading-[1.65] text-ink-2"
+              ? "mt-7 border-t border-line pt-5"
+              : "mt-9 border-t border-line pt-7"
           }
         >
-          {ONBOARDING_AFTER}
-        </p>
-      </div>
+          <div className="eyebrow">After that</div>
+          <p
+            className={
+              compact
+                ? "mt-2.5 text-[13.5px] leading-[1.6] text-ink-2"
+                : "mt-3 text-[14.5px] leading-[1.65] text-ink-2"
+            }
+          >
+            {ONBOARDING_OUTCOME.headline}{" "}
+            {ONBOARDING_OUTCOME.body}{" "}
+            <span className="font-medium text-ink-1">
+              {ONBOARDING_OUTCOME.emphasis}
+            </span>
+          </p>
+        </div>
+      )}
     </div>
   );
 }
