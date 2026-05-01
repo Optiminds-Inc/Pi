@@ -11,39 +11,48 @@
  *   • Standard easing, no spring physics
  */
 @theme {
-  /* ——— Surfaces ——— */
+  /* ——— Surfaces (Apple-classic-white, cool-toned) ——— */
   --color-paper: #ffffff;
-  --color-paper-2: #f7f6f3;
-  --color-paper-3: #f1f0ed;
-  --color-paper-tint: #fbfaf8;
-  --color-line: rgba(0, 0, 0, 0.09);
-  --color-line-strong: rgba(0, 0, 0, 0.16);
-  --color-line-glass: rgba(0, 0, 0, 0.09);
+  --color-paper-2: #f5f5f7;
+  --color-paper-3: #ebebef;
+  --color-paper-tint: #fafafc;
+  --color-line: rgba(0, 0, 0, 0.08);
+  --color-line-strong: rgba(0, 0, 0, 0.14);
+  --color-line-glass: rgba(0, 0, 0, 0.08);
 
-  /* ——— Ink scale ——— */
-  --color-ink-1: #191918;
-  --color-ink-2: #37352f;
-  --color-ink-3: #787774;
-  --color-ink-4: #a5a29e;
-  --color-ink-5: #d3d1cb;
+  /* ——— Ink scale (Apple text colors, neutral cool) ——— */
+  --color-ink-1: #1d1d1f;
+  --color-ink-2: #424245;
+  --color-ink-3: #6e6e73;
+  --color-ink-4: #86868b;
+  --color-ink-5: #d2d2d7;
 
   /* ——— Accent ——— */
-  --color-accent: #191918;
+  --color-accent: #1d1d1f;
   --color-accent-hover: #000000;
-  --color-accent-soft: #d3e5ef;
+  --color-accent-soft: #d4eeec;
 
-  /* ——— Status ——— */
+  /* ——— Status (info = Tiffany blue) ——— */
   --color-success: #14832b;
   --color-success-soft: #dbeddb;
   --color-warning: #d9730d;
   --color-warning-soft: #fdecc8;
   --color-danger: #e03e3e;
   --color-danger-soft: #fbe4e4;
-  --color-info: #2383e2;
-  --color-info-soft: #d3e5ef;
+  --color-info: #0abab5;
+  --color-info-hover: #089791;
+  --color-info-soft: #d4eeec;
 
-  /* ——— Fonts ——— */
-  --font-logo: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  /* ——— Mondrian primaries (for small components needing differentiation) ——— */
+  --color-mondrian-red: #d02e36;
+  --color-mondrian-red-soft: #fbe5e7;
+  --color-mondrian-yellow: #c89510;
+  --color-mondrian-yellow-soft: #fdf1c9;
+  --color-mondrian-blue: #1c4cb5;
+  --color-mondrian-blue-soft: #dde7fa;
+
+  /* ——— Fonts (logo uses DM Serif Display — luxury upright printing serif) ——— */
+  --font-logo: var(--font-dm-serif), "Didot", Georgia, serif;
   --font-display: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   --font-mono: "iA Writer Mono", Menlo, monospace;
@@ -86,7 +95,7 @@
     0 14px 40px rgba(0, 0, 0, 0.08);
   --shadow-hero: var(--shadow-xl);
 
-  --shadow-focus: 0 0 0 3px rgba(35, 131, 226, 0.12);
+  --shadow-focus: 0 0 0 3px rgba(10, 186, 181, 0.18);
   --shadow-press: 0 0 0 1px rgba(0, 0, 0, 0.06);
 
   /* ——— Motion ——— */
@@ -118,6 +127,33 @@ body {
 body {
   font-family: var(--font-sans);
   text-rendering: optimizeLegibility;
+  background-color: var(--color-paper);
+  /*
+   * Each glow has a near-white pale-cyan center that reads as luminous,
+   * a faint Tiffany tint mid-stop, then fades to transparent.
+   * This avoids the "gray haze" look that comes from a saturated teal
+   * sitting at high opacity on top of pure white.
+   */
+  background-image:
+    radial-gradient(
+      ellipse 1400px 900px at 0% 0%,
+      rgba(225, 250, 247, 0.95),
+      rgba(10, 186, 181, 0.10) 35%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 1200px 850px at 100% 100%,
+      rgba(225, 250, 247, 0.80),
+      rgba(10, 186, 181, 0.08) 35%,
+      transparent 70%
+    ),
+    radial-gradient(
+      circle 750px at 100% 0%,
+      rgba(225, 250, 247, 0.75),
+      transparent 60%
+    );
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
 /* ——— Typography ——— */
@@ -128,9 +164,10 @@ body {
 }
 
 .font-logo {
-  font-family: var(--font-logo);
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-family: var(--font-dm-serif), "Didot", Georgia, serif;
+  font-weight: 400;
+  letter-spacing: 0;
+  font-style: normal;
 }
 
 .tabular {
@@ -194,8 +231,32 @@ body {
   }
 
   .glass-nav {
-    background: var(--color-paper);
-    border-bottom: 1px solid var(--color-line);
+    background: rgba(255, 255, 255, 0.62);
+    -webkit-backdrop-filter: saturate(180%) blur(24px);
+    backdrop-filter: saturate(180%) blur(24px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      inset 0 -0.5px 0 rgba(0, 0, 0, 0.02);
+  }
+
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.95);
+    }
+  }
+
+  .dark .glass-nav {
+    background: rgba(12, 12, 12, 0.7);
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.04),
+      inset 0 -0.5px 0 rgba(255, 255, 255, 0.02);
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .dark .glass-nav {
+      background: rgba(12, 12, 12, 0.95);
+    }
   }
 }
 
@@ -315,7 +376,7 @@ body {
   cursor: pointer;
   transition: color var(--dur-fast) var(--ease-out);
 }
-.btn-ghost:hover { color: #1b6ec2; }
+.btn-ghost:hover { color: var(--color-info-hover); }
 .btn-ghost .arrow {
   transition: transform var(--dur-base) var(--ease-out);
 }
@@ -400,6 +461,9 @@ body {
 .dot-warning { background: var(--color-warning); }
 .dot-info    { background: var(--color-info); }
 .dot-running { background: var(--color-ink-1); }
+.dot-mondrian-red    { background: var(--color-mondrian-red); }
+.dot-mondrian-yellow { background: var(--color-mondrian-yellow); }
+.dot-mondrian-blue   { background: var(--color-mondrian-blue); }
 
 .dot-live {
   position: relative;
@@ -422,6 +486,32 @@ body {
   inset: 1px;
   border-radius: 999px;
   background: var(--color-success);
+}
+
+/* Mondrian Red live indicator (broadcast feel — extra visible) */
+.dot-live-red {
+  position: relative;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+}
+.dot-live-red::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: var(--color-mondrian-red);
+  opacity: 0.6;
+  animation: pi-ping 1.8s var(--ease-out) infinite;
+}
+.dot-live-red::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: var(--color-mondrian-red);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.7);
 }
 @keyframes pi-ping {
   0%   { transform: scale(1);    opacity: 0.5; }
@@ -594,77 +684,116 @@ input[type="range"]::-moz-range-thumb {
 }
 .bg-ambient > * { position: relative; z-index: 1; }
 
+/*
+ * .bg-tinted — refined contrast section.
+ *  Light: Apple-style cool gray. Clearly distinct from pure white
+ *  without the visual weight of black.
+ *  Dark: paper-2 — a subtle step up from the page background.
+ */
 .bg-tinted {
+  background: #ebedf2;
+}
+
+.dark .bg-tinted {
   background: var(--color-paper-2);
 }
 
 /* ——————————————————————————————————————— */
-/*  Dark mode                                 */
+/*  Dark mode (class-based)                   */
 /* ——————————————————————————————————————— */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-paper: #0c0c0c;
-    --color-paper-2: #161616;
-    --color-paper-3: #1e1e1e;
-    --color-paper-tint: #111111;
-    --color-line: rgba(255, 255, 255, 0.08);
-    --color-line-strong: rgba(255, 255, 255, 0.14);
-    --color-line-glass: rgba(255, 255, 255, 0.06);
+:root.dark {
+  color-scheme: dark;
 
-    --color-ink-1: #ececea;
-    --color-ink-2: #bbbbb8;
-    --color-ink-3: #7d7d7a;
-    --color-ink-4: #4f4f4c;
-    --color-ink-5: #2a2a28;
+  --color-paper: #0c0c0c;
+  --color-paper-2: #161616;
+  --color-paper-3: #1e1e1e;
+  --color-paper-tint: #111111;
+  --color-line: rgba(255, 255, 255, 0.08);
+  --color-line-strong: rgba(255, 255, 255, 0.14);
+  --color-line-glass: rgba(255, 255, 255, 0.06);
 
-    --color-accent: #ececea;
-    --color-accent-hover: #ffffff;
-    --color-accent-soft: rgba(59, 143, 239, 0.15);
+  --color-ink-1: #ececea;
+  --color-ink-2: #bbbbb8;
+  --color-ink-3: #7d7d7a;
+  --color-ink-4: #4f4f4c;
+  --color-ink-5: #2a2a28;
 
-    --color-success: #2ebb56;
-    --color-success-soft: rgba(46, 187, 86, 0.14);
-    --color-warning: #e8850c;
-    --color-warning-soft: rgba(232, 133, 12, 0.14);
-    --color-danger: #e5484d;
-    --color-danger-soft: rgba(229, 72, 77, 0.14);
-    --color-info: #3b8fef;
-    --color-info-soft: rgba(59, 143, 239, 0.14);
+  --color-accent: #ececea;
+  --color-accent-hover: #ffffff;
+  --color-accent-soft: rgba(65, 217, 211, 0.16);
 
-    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
-    --shadow-sm:
-      0 1px 2px rgba(0, 0, 0, 0.12),
-      0 4px 12px rgba(0, 0, 0, 0.2);
-    --shadow-md:
-      0 2px 4px rgba(0, 0, 0, 0.15),
-      0 6px 20px rgba(0, 0, 0, 0.25);
-    --shadow-lg:
-      0 2px 6px rgba(0, 0, 0, 0.2),
-      0 10px 32px rgba(0, 0, 0, 0.35);
-    --shadow-xl:
-      0 4px 10px rgba(0, 0, 0, 0.25),
-      0 16px 48px rgba(0, 0, 0, 0.4);
-    --shadow-hero: var(--shadow-xl);
+  --color-success: #2ebb56;
+  --color-success-soft: rgba(46, 187, 86, 0.14);
+  --color-warning: #e8850c;
+  --color-warning-soft: rgba(232, 133, 12, 0.14);
+  --color-danger: #e5484d;
+  --color-danger-soft: rgba(229, 72, 77, 0.14);
+  --color-info: #41d9d3;
+  --color-info-hover: #6cebe6;
+  --color-info-soft: rgba(65, 217, 211, 0.14);
 
-    --shadow-focus: 0 0 0 3px rgba(59, 143, 239, 0.2);
-    --shadow-press: 0 0 0 1px rgba(255, 255, 255, 0.08);
+  --color-mondrian-red: #ec5961;
+  --color-mondrian-red-soft: rgba(236, 89, 97, 0.18);
+  --color-mondrian-yellow: #ecbc1f;
+  --color-mondrian-yellow-soft: rgba(236, 188, 31, 0.18);
+  --color-mondrian-blue: #5481e8;
+  --color-mondrian-blue-soft: rgba(84, 129, 232, 0.20);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-sm:
+    0 1px 2px rgba(0, 0, 0, 0.12),
+    0 4px 12px rgba(0, 0, 0, 0.2);
+  --shadow-md:
+    0 2px 4px rgba(0, 0, 0, 0.15),
+    0 6px 20px rgba(0, 0, 0, 0.25);
+  --shadow-lg:
+    0 2px 6px rgba(0, 0, 0, 0.2),
+    0 10px 32px rgba(0, 0, 0, 0.35);
+  --shadow-xl:
+    0 4px 10px rgba(0, 0, 0, 0.25),
+    0 16px 48px rgba(0, 0, 0, 0.4);
+  --shadow-hero: var(--shadow-xl);
+
+  --shadow-focus: 0 0 0 3px rgba(65, 217, 211, 0.22);
+  --shadow-press: 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.dark body {
+  background-image:
+    radial-gradient(ellipse 1400px 900px at 0% 0%, rgba(65, 217, 211, 0.26), transparent 65%),
+    radial-gradient(ellipse 1200px 850px at 100% 100%, rgba(65, 217, 211, 0.18), transparent 65%),
+    radial-gradient(circle 750px at 100% 0%, rgba(65, 217, 211, 0.14), transparent 60%);
+}
+
+.dark .glass-nav {
+  background: rgba(14, 14, 14, 0.55);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    inset 0 -0.5px 0 rgba(0, 0, 0, 0.4);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .dark .glass-nav {
+    background: rgba(14, 14, 14, 0.95);
   }
+}
 
-  .btn-ghost:hover { color: #5ba3f5; }
+.dark .btn-ghost:hover { color: var(--color-info-hover); }
 
-  ::selection {
-    background: var(--color-accent-soft);
-    color: var(--color-ink-1);
-  }
+.dark ::selection {
+  background: var(--color-accent-soft);
+  color: var(--color-ink-1);
+}
 
-  input[type="range"]::-webkit-slider-thumb {
-    background: var(--color-ink-1);
-    box-shadow:
-      0 1px 2px rgba(0, 0, 0, 0.3),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-  }
-  input[type="range"]::-moz-range-thumb {
-    background: var(--color-ink-1);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-  }
+.dark input[type="range"]::-webkit-slider-thumb {
+  background: var(--color-ink-1);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+.dark input[type="range"]::-moz-range-thumb {
+  background: var(--color-ink-1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }

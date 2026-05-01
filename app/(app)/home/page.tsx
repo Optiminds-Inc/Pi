@@ -398,21 +398,27 @@ function CallsChart() {
       </div>
       <div className="mt-6">
         <div className="flex h-[120px] items-end gap-[3px]">
-          {data.map((v, i) => (
-            <div
-              key={i}
-              className="group relative flex-1 self-stretch"
-              title={`${v}`}
-            >
+          {data.map((v, i) => {
+            const palette = ["#D40920", "#1356A2", "#F7D842", "#FAFAFA"];
+            const ci = (i * 7 + v * 3) % palette.length;
+            const color = palette[ci];
+            return (
               <div
-                className="absolute right-0 bottom-0 left-0 rounded-[2px] bg-info/35 transition-colors duration-150 group-hover:bg-info"
-                style={{
-                  height: `${(v / max) * 100}%`,
-                  minHeight: "2px",
-                }}
-              />
-            </div>
-          ))}
+                key={i}
+                className="group relative flex-1 self-stretch"
+                title={`${v}`}
+              >
+                <div
+                  className="absolute right-0 bottom-0 left-0 transition-opacity duration-150 group-hover:opacity-80"
+                  style={{
+                    height: `${(v / max) * 100}%`,
+                    minHeight: "2px",
+                    backgroundColor: color,
+                  }}
+                />
+              </div>
+            );
+          })}
         </div>
         <div className="mt-3 flex justify-between border-t border-line pt-2 text-[11px] tabular text-ink-4">
           {dateLabels.map((dl) => (

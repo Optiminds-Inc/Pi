@@ -4,21 +4,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { agents, firm, getPendingCount, running } from "@/lib/mock";
+import { ThemeToggleRow } from "@/components/ThemeToggle";
 
 const MIN_WIDTH = 200;
 const MAX_WIDTH = 380;
 const DEFAULT_WIDTH = 232;
 const STORAGE_KEY = "pi-sidebar-width";
 
-const COMING_SOON_AGENTS = [
-  { id: "maps", name: "Maps" },
-  { id: "lsa", name: "LSA" },
-  { id: "yelp", name: "Yelp" },
-];
-
 export default function Sidebar() {
   const pathname = usePathname();
   const isActive = (href: string) => pathname?.startsWith(href) ?? false;
+  const isAgentsList = pathname === "/agents";
 
   const [width, setWidth] = useState(DEFAULT_WIDTH);
   const [dragging, setDragging] = useState(false);
@@ -99,21 +95,21 @@ export default function Sidebar() {
             icon={<LeadsIcon active={isActive("/leads")} />}
             badge={<MetaBadge text="3 new" />}
           />
+          <NavItem
+            href="/activity"
+            label="Activity"
+            active={isActive("/activity")}
+            icon={<ActivityIcon active={isActive("/activity")} />}
+            badge={<RunningBadge count={running.length} />}
+          />
         </ul>
 
         <div className="mt-7">
           <SidebarLabel>Your AI team</SidebarLabel>
           <ul className="mt-2 space-y-0.5">
-            <NavItem
-              href="/activity"
-              label="Activity"
-              active={isActive("/activity")}
-              icon={<ActivityIcon active={isActive("/activity")} />}
-              badge={<RunningBadge count={running.length} />}
-            />
             {agents.map((a) => {
               const href = `/agents/${a.id}`;
-              const active = isActive(href);
+              const active = pathname === href;
               const pending = getPendingCount(a.id);
               return (
                 <AgentNavItem
@@ -126,9 +122,7 @@ export default function Sidebar() {
                 />
               );
             })}
-            {COMING_SOON_AGENTS.map((a) => (
-              <ComingSoonAgentItem key={a.id} label={a.name} />
-            ))}
+            <NewAgentItem active={isAgentsList} />
           </ul>
         </div>
 
@@ -249,21 +243,25 @@ function AgentNavItem({
   );
 }
 
-function ComingSoonAgentItem({ label }: { label: string }) {
+function NewAgentItem({ active }: { active: boolean }) {
   return (
     <li>
-      <div
-        aria-disabled
-        className="flex cursor-not-allowed items-center gap-2.5 rounded-[8px] px-3 py-2 text-[13.5px] opacity-60"
+      <Link
+        href="/agents"
+        className={[
+          "group flex items-center gap-2.5 rounded-[8px] px-3 py-[7px] text-[13.5px] transition-all duration-200",
+          active
+            ? "bg-paper text-ink-1 shadow-[var(--shadow-xs)]"
+            : "text-ink-4 hover:bg-paper hover:text-ink-2",
+        ].join(" ")}
       >
-        <span className="shrink-0">
-          <span className="inline-block h-1.5 w-1.5 rounded-full bg-ink-4" aria-hidden />
+        <span className="shrink-0 transition-transform duration-200 group-hover:scale-110">
+          <PlusIcon active={active} />
         </span>
-        <span className="min-w-0 flex-1">
-          <span className="block truncate text-ink-4">{label}</span>
-          <span className="block truncate text-[11px] text-ink-4">Coming soon</span>
+        <span className={["flex-1", active ? "font-medium" : ""].join(" ")}>
+          New agent
         </span>
-      </div>
+      </Link>
     </li>
   );
 }
@@ -347,6 +345,9 @@ function ProfileMenu() {
           <div className="border-t border-line py-1">
             <MenuLink href="/billing" label="Billing" />
             <MenuLink href="/help" label="Help" />
+          </div>
+          <div className="border-t border-line py-1">
+            <ThemeToggleRow />
           </div>
           <div className="border-t border-line py-1">
             <button
@@ -444,6 +445,18 @@ function SetupIcon({ active }: { active?: boolean }) {
         d="M8 1.5v2M8 12.5v2M14.5 8h-2M3.5 8h-2M12.6 3.4l-1.4 1.4M4.8 11.2l-1.4 1.4M12.6 12.6l-1.4-1.4M4.8 4.8L3.4 3.4"
         stroke="currentColor"
         strokeWidth={w}
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+function PlusIcon({ active }: { active?: boolean }) {
+  return (
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden>
+      <path
+        d="M8 3.5v9M3.5 8h9"
+        stroke="currentColor"
+        strokeWidth={active ? 1.6 : 1.3}
         strokeLinecap="round"
       />
     </svg>

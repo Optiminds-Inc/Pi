@@ -25,5 +25,8 @@ export const ONBOARDING_STEPS = [
   },
 ] as const;
 
-export const ONBOARDING_AFTER =
-  "Your future clients become predictable. Open Pi daily to check activity, review results, adjust strategy and budget. That's all you do.";
+export const ONBOARDING_OUTCOME = {
+  headline: "Your future clients become predictable.",
+  body: "Open Pi daily to check activity, review results, adjust your strategy and budget.",
+  emphasis: "That's all you do.",
+} as const;
