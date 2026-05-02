@@ -49,6 +49,21 @@ export default function AgentPage({
   const answers = quickAnswers[agentId];
   const allEvents = [...events, ...convo];
 
+  // Default the settings panel to ~54% of the available agent-page width
+  // so it always reads as slightly wider than the chat side, regardless of
+  // viewport. User can still drag the resize handle to override.
+  useEffect(() => {
+    const sidebar = parseInt(
+      getComputedStyle(document.documentElement).getPropertyValue(
+        "--sidebar-width",
+      ) || "232",
+      10,
+    );
+    const available = window.innerWidth - sidebar;
+    const target = Math.round(available * 0.54);
+    setPanelWidth(Math.max(560, Math.min(900, target)));
+  }, []);
+
   useEffect(() => {
     const el = scrollRef.current;
     if (el) el.scrollTop = el.scrollHeight;
@@ -236,68 +251,39 @@ function CoverHero({
 }
 
 function MondrianArt() {
-  const LINE = "#1a1a1a";
-  const lineW = 3;
+  // Pastel Mondrian — color blocks only, no dividing lines so the
+  // composition reads as soft backdrop texture rather than a graphic.
+  const split = 74;
   return (
-    <div className="absolute inset-0" style={{ background: "#f6f1e3" }}>
+    <div className="absolute inset-0" style={{ background: "#faf6ec" }}>
       <div
         className="absolute"
         style={{
           top: 0,
-          left: "62%",
+          left: `${split}%`,
           right: 0,
-          height: "52%",
-          background: "#284a85",
+          height: "55%",
+          background: "#c5d3e6",
         }}
       />
       <div
         className="absolute"
         style={{
-          top: "52%",
-          left: "62%",
-          width: "16%",
+          top: "55%",
+          left: `${split}%`,
+          width: "11%",
           bottom: 0,
-          background: "#e7b536",
+          background: "#ecdcad",
         }}
       />
       <div
         className="absolute"
         style={{
-          top: "52%",
-          left: "78%",
+          top: "55%",
+          left: `${split + 11}%`,
           right: 0,
           bottom: 0,
-          background: "#bf3328",
-        }}
-      />
-      <div
-        className="absolute"
-        style={{
-          top: 0,
-          bottom: 0,
-          left: `calc(62% - ${lineW / 2}px)`,
-          width: lineW,
-          background: LINE,
-        }}
-      />
-      <div
-        className="absolute"
-        style={{
-          top: `calc(52% - ${lineW / 2}px)`,
-          left: "62%",
-          right: 0,
-          height: lineW,
-          background: LINE,
-        }}
-      />
-      <div
-        className="absolute"
-        style={{
-          top: "52%",
-          bottom: 0,
-          left: `calc(78% - ${lineW / 2}px)`,
-          width: lineW,
-          background: LINE,
+          background: "#e1bab4",
         }}
       />
     </div>

@@ -30,12 +30,15 @@ const CATEGORY_TINT: Record<
 
 type MarketStatus = "available" | "training" | "drafting" | "tuning";
 
-type PricingUnit = "mo" | "call" | "hr" | "letter" | "article" | "case";
+type PricingUnit = "mo" | "call" | "hr" | "letter" | "article" | "case" | "lead";
+
+type MarketAudience = "lawyer" | "public";
 
 type MarketAgent = {
   id: string;
   name: string;
   category: MarketCategory;
+  audience: MarketAudience;
   description: string;
   seller: string;
   sellerCity: string;
@@ -45,10 +48,53 @@ type MarketAgent = {
 };
 
 const MARKET_AGENTS: MarketAgent[] = [
+  // ——— Public-facing (lead-gen on the lawyer's site) ———
+  {
+    id: "case-worth-estimator",
+    name: "Case worth estimator",
+    category: "ops",
+    audience: "public",
+    description:
+      "The public describes their accident; gets an instant case-value range based on Texas verdict data and similar settlements in their county.",
+    seller: "Hayes Mitchell",
+    sellerCity: "Houston, TX",
+    status: "available",
+    hires: 240,
+    pricing: { amount: 35, unit: "lead" },
+  },
+  {
+    id: "after-crash-checklist",
+    name: "After-crash checklist",
+    category: "ops",
+    audience: "public",
+    description:
+      "The first 48 hours after a Texas crash — what to photograph, who to call, and exactly what NOT to say to insurance adjusters.",
+    seller: "Walker PI",
+    sellerCity: "Dallas, TX",
+    status: "available",
+    hires: 180,
+    pricing: { amount: 28, unit: "lead" },
+  },
+  {
+    id: "settlement-offer-checker",
+    name: "Settlement offer checker",
+    category: "ops",
+    audience: "public",
+    description:
+      "The public pastes their insurance settlement offer; gets a fair-vs-lowball read with the line items the adjuster left out.",
+    seller: "Reed & Co.",
+    sellerCity: "Atlanta, GA",
+    status: "available",
+    hires: 95,
+    pricing: { amount: 45, unit: "lead" },
+  },
+
+  // ——— Lawyer-facing (run inside their practice) ———
   {
     id: "article-writer",
     name: "Article writer",
     category: "seo",
+    audience: "lawyer",
     description:
       "Drafts deeply researched articles for niche PI verticals — TBI, motorcycle, premises liability.",
     seller: "Reed & Co.",
@@ -61,6 +107,7 @@ const MARKET_AGENTS: MarketAgent[] = [
     id: "media-buyer",
     name: "Search ad pacer",
     category: "ads",
+    audience: "lawyer",
     description:
       "Bid pacer tuned for Texas PI keywords. Hits sub-$2,500 cost-per-signed within 90 days.",
     seller: "Walker PI",
@@ -73,6 +120,7 @@ const MARKET_AGENTS: MarketAgent[] = [
     id: "demand-drafter",
     name: "Demand letter drafter",
     category: "ops",
+    audience: "lawyer",
     description:
       "Writes demand letters for auto accidents using your case files and the local insurer's payout history.",
     seller: "Sarah Tan",
@@ -85,6 +133,7 @@ const MARKET_AGENTS: MarketAgent[] = [
     id: "citation-hunter",
     name: "Citation hunter",
     category: "geo",
+    audience: "lawyer",
     description:
       "Tracks LLM citations across ChatGPT, Perplexity, Claude, Gemini. Flags drops, reverse-engineers wins.",
     seller: "Brand & Sons",
@@ -97,6 +146,7 @@ const MARKET_AGENTS: MarketAgent[] = [
     id: "settlement-researcher",
     name: "Settlement researcher",
     category: "ops",
+    audience: "lawyer",
     description:
       "Pulls comparable verdicts and settlements for any case profile in 30 seconds.",
     seller: "Owens & Park",
@@ -109,6 +159,7 @@ const MARKET_AGENTS: MarketAgent[] = [
     id: "ad-copy-tester",
     name: "Ad copy tester",
     category: "ads",
+    audience: "lawyer",
     description:
       "Spins headline + description variants, runs them as proper splits, kills losers automatically.",
     seller: "Lin Bryant",
@@ -121,6 +172,7 @@ const MARKET_AGENTS: MarketAgent[] = [
     id: "yelp-pacer",
     name: "Yelp pacer",
     category: "ops",
+    audience: "lawyer",
     description:
       "Asks the right clients for reviews at the right time. Replies to negatives within 24 hours.",
     seller: "Raj Patel",
@@ -133,6 +185,7 @@ const MARKET_AGENTS: MarketAgent[] = [
     id: "local-seo",
     name: "Local SEO",
     category: "seo",
+    audience: "lawyer",
     description:
       "Owns Google Business Profile, citation consistency, and the local 3-pack push.",
     seller: "Carla Munoz",
@@ -145,6 +198,7 @@ const MARKET_AGENTS: MarketAgent[] = [
     id: "intake-screener",
     name: "Intake screener",
     category: "ops",
+    audience: "lawyer",
     description:
       "Triages inbound calls and forms in real time. Routes high-intent leads, deflects low-fit.",
     seller: "Hayes Mitchell",
@@ -229,10 +283,13 @@ function MarketAgentCard({ agent }: { agent: MarketAgent }) {
             <span className="text-[14.5px] font-medium text-ink-1">
               {agent.name}
             </span>
+            {agent.audience === "public" && <AudienceBadge />}
             {!isAvailable && <StatusBadge status={agent.status} />}
           </div>
           <div className="mt-0.5 truncate text-[11.5px] text-ink-4">
-            {tint.label}
+            {agent.audience === "public"
+              ? `For your clients · ${tint.label}`
+              : tint.label}
           </div>
         </div>
       </div>
@@ -310,6 +367,15 @@ function StatusBadge({ status }: { status: MarketStatus }) {
   );
 }
 
+function AudienceBadge() {
+  return (
+    <span className="inline-flex items-center gap-1 rounded-full bg-mondrian-yellow-soft px-2 py-[1px] text-[10px] font-medium uppercase tracking-[0.14em] text-mondrian-yellow">
+      <span className="h-1 w-1 rounded-full bg-mondrian-yellow" aria-hidden />
+      Lead-gen
+    </span>
+  );
+}
+
 function BuildYourOwnCard() {
   return (
     <section className="rounded-[16px] border border-line bg-paper-2 px-7 py-6">
@@ -326,8 +392,8 @@ function BuildYourOwnCard() {
             Share your skills as agents. Get paid. Get clients.
           </h2>
           <p className="mt-2 text-pretty text-[13px] leading-[1.6] text-ink-3">
-            Price your agent however you want — per month, per call, per
-            hour. Other lawyers install and pay, and many send cases your way.
+            Build agents from what you know — lawyers pay to use them, the
+            public becomes your clients. Set your own price.
           </p>
         </div>
         <button
