@@ -303,21 +303,22 @@ function MondrianArt() {
 }
 
 function MorandiArt() {
-  const bottles: Array<{
+  // Pale Morandi palette ascending left → right to suggest growth.
+  const bars: Array<{
     left: string;
     width: string;
     height: string;
     color: string;
   }> = [
-    { left: "32%", width: "10%", height: "62%", color: "#a8b6a4" },
-    { left: "44%", width: "13%", height: "80%", color: "#bea495" },
-    { left: "59%", width: "9%", height: "55%", color: "#d2c088" },
-    { left: "70%", width: "12%", height: "72%", color: "#b6a17e" },
-    { left: "84%", width: "10%", height: "65%", color: "#a4abb4" },
+    { left: "30%", width: "10%", height: "32%", color: "#d6dccf" },
+    { left: "44%", width: "11%", height: "48%", color: "#e4d4c5" },
+    { left: "59%", width: "10%", height: "64%", color: "#ebe0b8" },
+    { left: "73%", width: "11%", height: "80%", color: "#dbcdb0" },
+    { left: "88%", width: "10%", height: "94%", color: "#d2d8e0" },
   ];
   return (
-    <div className="absolute inset-0" style={{ background: "#ece2cf" }}>
-      {bottles.map((b, i) => (
+    <div className="absolute inset-0" style={{ background: "#f5efe1" }}>
+      {bars.map((b, i) => (
         <div
           key={i}
           className="absolute"

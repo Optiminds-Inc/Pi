@@ -89,8 +89,8 @@ export const agents: Agent[] = [
   },
   {
     id: "geo",
-    name: "AI brief writer",
-    fullName: "AI brief writer",
+    name: "GEO optimizer",
+    fullName: "GEO optimizer",
     tagline: "Drafts answer-first briefs cited by ChatGPT, Perplexity, and Claude when prospects ask AI for a Houston PI lawyer.",
     role: "Writes articles tuned to be cited by ChatGPT, Perplexity, Claude, and other generative engines. Different style than SEO — answer-first, citation-heavy, structured for LLM extraction.",
     channels: ["ChatGPT", "Perplexity", "Claude"],

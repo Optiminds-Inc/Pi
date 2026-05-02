@@ -399,7 +399,8 @@ function CallsChart() {
       <div className="mt-6">
         <div className="flex h-[120px] items-end gap-[3px]">
           {data.map((v, i) => {
-            const palette = ["#D40920", "#1356A2", "#F7D842", "#FAFAFA"];
+            // Mondrian quartet — red / blue / yellow / black (ink-1 inverts in dark mode)
+            const palette = ["#D40920", "#1356A2", "#F7D842", "var(--color-ink-1)"];
             const ci = (i * 7 + v * 3) % palette.length;
             const color = palette[ci];
             return (
