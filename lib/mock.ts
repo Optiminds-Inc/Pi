@@ -1075,6 +1075,239 @@ export const contentQueue = [
 ];
 
 /* —————————————————————————————————————————— */
+/*  Published articles (Article writer)            */
+/* —————————————————————————————————————————— */
+
+export type ArticleBlock =
+  | { kind: "h2"; text: string }
+  | { kind: "p"; text: string }
+  | { kind: "ul"; items: string[] }
+  | { kind: "callout"; text: string };
+
+export type PublishedArticle = {
+  id: string;
+  title: string;
+  area: string;
+  publishedAt: string;
+  url: string;
+  rank: number | null;
+  visitors30d: number;
+  status: "ranking" | "indexed" | "cited";
+  excerpt: string;
+  body: ArticleBlock[];
+};
+
+export const publishedArticles: PublishedArticle[] = [
+  {
+    id: "art-tbi",
+    title: "Brain Injury Settlements in Houston: A 2026 Guide",
+    area: "Brain injury",
+    publishedAt: "Apr 28, 2026",
+    url: "https://hayesmitchell.law/articles/houston-tbi-settlements-2026",
+    rank: 4,
+    visitors30d: 1840,
+    status: "ranking",
+    excerpt:
+      "What every Houston TBI victim needs to know about settlement values, statute of limitations, and which insurers actually pay.",
+    body: [
+      {
+        kind: "p",
+        text: "If you or a loved one suffered a traumatic brain injury (TBI) in Houston, the question on your mind is rarely the legal theory — it's the number. What is this case actually worth, and how long until you see any of it?",
+      },
+      {
+        kind: "p",
+        text: "We've handled hundreds of TBI cases across Harris, Fort Bend, and Montgomery counties. Below is the playbook we walk every new client through.",
+      },
+      {
+        kind: "h2",
+        text: "What drives a Houston TBI settlement",
+      },
+      {
+        kind: "p",
+        text: "Three factors move the number more than anything else: the severity of the injury (mild, moderate, or severe per Glasgow Coma Scale), the documented future-care cost, and the at-fault party's coverage limits.",
+      },
+      {
+        kind: "ul",
+        items: [
+          "Mild TBI / concussion: $25K – $150K typical range",
+          "Moderate TBI with cognitive deficits: $150K – $750K",
+          "Severe TBI requiring long-term care: $1M – policy limits",
+        ],
+      },
+      {
+        kind: "callout",
+        text: "Texas has a 2-year statute of limitations on personal injury claims. Miss that deadline and the case is gone, regardless of severity.",
+      },
+      {
+        kind: "h2",
+        text: "Which insurers pay quickly — and which fight",
+      },
+      {
+        kind: "p",
+        text: "From our case data over the past five years: State Farm and USAA tend to settle moderate TBI cases within 90 days when liability is clear. Allstate and Progressive routinely litigate to the courthouse steps. Knowing this up front shapes how aggressively we file.",
+      },
+      {
+        kind: "h2",
+        text: "What to do this week",
+      },
+      {
+        kind: "ul",
+        items: [
+          "Get every medical record from the ER, neurologist, and any imaging. Insurers anchor their offer to documentation.",
+          "Stop posting on social media. Adjusters do screenshot.",
+          "Talk to a lawyer before giving any recorded statement. The first 30 seconds of that call shape the entire case.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "art-truck",
+    title: "Truck Accident Cases: Who You Sue (and Why It Matters)",
+    area: "Truck",
+    publishedAt: "Apr 22, 2026",
+    url: "https://hayesmitchell.law/articles/truck-accident-defendants",
+    rank: 3,
+    visitors30d: 2210,
+    status: "ranking",
+    excerpt:
+      "An 18-wheeler crash usually has 4+ liable parties — driver, motor carrier, broker, shipper. Picking the wrong defendant can cap your recovery.",
+    body: [
+      {
+        kind: "p",
+        text: "Most car-on-car crashes have one defendant. Truck crashes almost never do. The single most important strategic decision in a commercial trucking case is identifying every party in the chain of liability — and filing against all of them.",
+      },
+      {
+        kind: "h2",
+        text: "The four parties almost always in play",
+      },
+      {
+        kind: "ul",
+        items: [
+          "The driver — for negligent operation, hours-of-service violations, fatigue.",
+          "The motor carrier — for negligent hiring, training, supervision, and maintenance.",
+          "The broker — increasingly named after recent Texas Supreme Court rulings.",
+          "The shipper / loader — when improper loading caused or contributed.",
+        ],
+      },
+      {
+        kind: "h2",
+        text: "Why this matters for your recovery",
+      },
+      {
+        kind: "p",
+        text: "A driver's personal policy might be $30K. The motor carrier's commercial policy is typically $750K – $1M. The broker may have a separate $1M layer. Naming everyone preserves access to those layers.",
+      },
+      {
+        kind: "callout",
+        text: "FMCSA records, ELD logs, and the truck's black box can be overwritten in 30 days. A litigation-hold letter must go out the week of the crash.",
+      },
+    ],
+  },
+  {
+    id: "art-mvc",
+    title: "Rideshare Accident Attorney Houston: Uber & Lyft Case Guide",
+    area: "Auto",
+    publishedAt: "Apr 18, 2026",
+    url: "https://hayesmitchell.law/articles/houston-rideshare-attorney",
+    rank: 6,
+    visitors30d: 1120,
+    status: "ranking",
+    excerpt:
+      "Whether the app was on, the trip was active, or the driver was waiting determines which $1M policy actually pays — and the difference can be six figures.",
+    body: [
+      {
+        kind: "p",
+        text: "Rideshare crash coverage in Texas runs in three tiers, depending on what the driver was doing the moment of the crash. Confusing the tiers is the #1 reason victims under-recover.",
+      },
+      {
+        kind: "h2",
+        text: "The three tiers — and what they pay",
+      },
+      {
+        kind: "ul",
+        items: [
+          "App off, personal driving: only the driver's personal auto policy applies (usually $30K – $50K).",
+          "App on, waiting for ride: contingent coverage of $50K / $100K / $25K.",
+          "Trip accepted or passenger in car: full $1M liability + $1M UM/UIM via Uber's or Lyft's commercial policy.",
+        ],
+      },
+      {
+        kind: "h2",
+        text: "How we prove which tier",
+      },
+      {
+        kind: "p",
+        text: "Within 7 days, we subpoena the rideshare app's trip logs, GPS pings, and timestamp data. Combined with the police crash time, we anchor exactly which tier of coverage was active. This single proof point typically swings settlements by 5-10x.",
+      },
+    ],
+  },
+  {
+    id: "art-slip",
+    title: "Houston Premises Liability: When the Property Owner Is Actually Liable",
+    area: "Slip",
+    publishedAt: "Apr 12, 2026",
+    url: "https://hayesmitchell.law/articles/houston-premises-liability",
+    rank: 9,
+    visitors30d: 480,
+    status: "indexed",
+    excerpt:
+      "Texas premises law turns on a single question: did the owner know about the hazard, or should they have? The answer to that decides whether your case is worth $0 or $250K+.",
+    body: [
+      {
+        kind: "p",
+        text: "Texas is one of the most plaintiff-unfriendly states for slip-and-fall cases. Winning requires proving the owner had actual or constructive notice of the hazard — and that bar is higher than most lawyers assume.",
+      },
+      {
+        kind: "h2",
+        text: "Actual vs. constructive notice — and how to prove each",
+      },
+      {
+        kind: "p",
+        text: "Actual notice means an employee saw the spill and didn't clean it. Constructive notice means the spill was there long enough that a reasonable inspection would have caught it. Each requires a different evidence playbook.",
+      },
+      {
+        kind: "ul",
+        items: [
+          "Pull store inspection logs (Walmart and HEB time-stamp every aisle sweep).",
+          "Get the surveillance footage in writing within 14 days — most stores overwrite at 30.",
+          "Identify the prior customer who reported, photographed, or stepped over the hazard. They are the case.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "art-dog",
+    title: "Dog Bite Settlements in Texas: The 2026 Statute and What It Pays",
+    area: "Other",
+    publishedAt: "Apr 4, 2026",
+    url: "https://hayesmitchell.law/articles/texas-dog-bite-settlements-2026",
+    rank: 12,
+    visitors30d: 290,
+    status: "indexed",
+    excerpt:
+      "Texas follows the 'one-bite rule' — but homeowner's insurance still pays, and the typical settlement is higher than most victims realize.",
+    body: [
+      {
+        kind: "p",
+        text: "Texas does not have a strict-liability dog-bite statute. We follow the common-law 'one-bite rule': the owner is liable if they knew or should have known the dog was dangerous. That sounds bad for victims — but in practice, the homeowner's insurance pays in 80%+ of cases we handle.",
+      },
+      {
+        kind: "h2",
+        text: "Typical settlement ranges",
+      },
+      {
+        kind: "ul",
+        items: [
+          "Minor bite, no scarring: $5K – $15K",
+          "Moderate bite with stitches and visible scar: $25K – $80K",
+          "Severe attack requiring reconstructive surgery: $150K – $500K",
+        ],
+      },
+    ],
+  },
+];
+
+/* —————————————————————————————————————————— */
 /*  Leads                                          */
 /* —————————————————————————————————————————— */
 

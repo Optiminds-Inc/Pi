@@ -17,6 +17,8 @@ import {
   getPendingCount,
   investment,
   pendingCampaignChanges,
+  publishedArticles,
+  type PublishedArticle,
   quickAnswers,
   quickPrompts,
   running,
@@ -661,6 +663,15 @@ function SettingsPanel({
           <PerformanceGrid agentId={agentId} />
         </PanelSection>
 
+        {agentId === "seo" && (
+          <PanelSection
+            title="Published articles"
+            sub="Live on your site. Click to read or preview."
+          >
+            <PublishedArticlesList />
+          </PanelSection>
+        )}
+
         <PanelSection title="To do">
           <Todos agentId={agentId} />
         </PanelSection>
@@ -891,6 +902,256 @@ function GeoTodos() {
 
 function Empty({ children }: { children: React.ReactNode }) {
   return <div className="text-[12.5px] text-ink-4">{children}</div>;
+}
+
+/* ——————————————————————————————————————— */
+/*  Published articles list + preview modal  */
+/* ——————————————————————————————————————— */
+
+function PublishedArticlesList() {
+  const [openId, setOpenId] = useState<string | null>(null);
+  const open = publishedArticles.find((a) => a.id === openId) ?? null;
+
+  return (
+    <>
+      <ul className="divide-y divide-line">
+        {publishedArticles.map((a) => (
+          <li key={a.id}>
+            <button
+              type="button"
+              onClick={() => setOpenId(a.id)}
+              className="group flex w-full items-start gap-3 py-3 text-left transition-colors duration-150 hover:bg-paper-2/40"
+            >
+              <ArticleStatusDot status={a.status} />
+              <div className="min-w-0 flex-1">
+                <div className="flex items-baseline gap-2">
+                  <h4 className="truncate text-[13.5px] font-medium text-ink-1">
+                    {a.title}
+                  </h4>
+                </div>
+                <div className="mt-0.5 flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-[11.5px] text-ink-4">
+                  <span>{a.area}</span>
+                  <span>·</span>
+                  <span>{a.publishedAt}</span>
+                  {a.rank != null && (
+                    <>
+                      <span>·</span>
+                      <span className="tabular">Rank #{a.rank}</span>
+                    </>
+                  )}
+                  <span>·</span>
+                  <span className="tabular">
+                    {a.visitors30d.toLocaleString()} visits / 30d
+                  </span>
+                </div>
+              </div>
+              <span className="mt-[3px] shrink-0 text-ink-4 transition-transform duration-150 group-hover:translate-x-[2px] group-hover:text-ink-2">
+                <ChevronRightSmIcon />
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
+
+      {open && (
+        <ArticlePreviewModal
+          article={open}
+          onClose={() => setOpenId(null)}
+        />
+      )}
+    </>
+  );
+}
+
+function ArticleStatusDot({ status }: { status: PublishedArticle["status"] }) {
+  const cls =
+    status === "ranking"
+      ? "bg-mondrian-blue"
+      : status === "cited"
+        ? "bg-mondrian-red"
+        : "bg-ink-4";
+  return (
+    <span
+      className={[
+        "mt-[6px] inline-block h-1.5 w-1.5 shrink-0 rounded-full",
+        cls,
+      ].join(" ")}
+      aria-hidden
+    />
+  );
+}
+
+function ChevronRightSmIcon() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden>
+      <path
+        d="M6 4l4 4-4 4"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function ArticlePreviewModal({
+  article,
+  onClose,
+}: {
+  article: PublishedArticle;
+  onClose: () => void;
+}) {
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    document.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/40 px-4 py-10 backdrop-blur-sm"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Article preview"
+    >
+      <div
+        className="relative my-6 w-full max-w-[720px] rounded-[16px] border border-line bg-paper shadow-[var(--shadow-xl)]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <header className="sticky top-0 z-10 flex items-center justify-between gap-4 border-b border-line bg-paper/90 px-6 py-3 backdrop-blur-sm">
+          <div className="flex min-w-0 items-center gap-2 text-[11.5px] text-ink-4">
+            <span className="rounded-full bg-paper-2 px-2 py-[2px] text-[10px] font-medium uppercase tracking-[0.14em] text-ink-3">
+              Preview
+            </span>
+            <span className="truncate">{article.url.replace(/^https?:\/\//, "")}</span>
+          </div>
+          <div className="flex shrink-0 items-center gap-2">
+            <a
+              href={article.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-md border border-line px-2.5 py-1 text-[11.5px] text-ink-2 transition-colors duration-150 hover:border-line-strong hover:text-ink-1"
+            >
+              View live →
+            </a>
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close preview"
+              className="flex h-7 w-7 items-center justify-center rounded-md text-ink-3 transition-colors duration-150 hover:bg-paper-2 hover:text-ink-1"
+            >
+              <CloseIcon />
+            </button>
+          </div>
+        </header>
+
+        <article className="px-10 pt-8 pb-12">
+          <div className="text-[11px] font-medium uppercase tracking-[0.14em] text-ink-4">
+            {article.area}
+          </div>
+          <h1
+            className="font-display mt-2 text-balance text-ink-1"
+            style={{
+              fontSize: "32px",
+              fontWeight: 700,
+              letterSpacing: "-0.022em",
+              lineHeight: "1.18",
+            }}
+          >
+            {article.title}
+          </h1>
+          <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-ink-4">
+            <span>Hayes Mitchell Personal Injury Law</span>
+            <span>·</span>
+            <span>Published {article.publishedAt}</span>
+            {article.rank != null && (
+              <>
+                <span>·</span>
+                <span>Currently ranking #{article.rank} on Google</span>
+              </>
+            )}
+          </div>
+
+          <div className="mt-7 space-y-5">
+            {article.body.map((block, i) => (
+              <ArticleBlockRenderer key={i} block={block} />
+            ))}
+          </div>
+        </article>
+      </div>
+    </div>
+  );
+}
+
+function ArticleBlockRenderer({
+  block,
+}: {
+  block: PublishedArticle["body"][number];
+}) {
+  if (block.kind === "h2") {
+    return (
+      <h2
+        className="font-display mt-4 text-ink-1"
+        style={{
+          fontSize: "20px",
+          fontWeight: 600,
+          letterSpacing: "-0.014em",
+          lineHeight: "1.3",
+        }}
+      >
+        {block.text}
+      </h2>
+    );
+  }
+  if (block.kind === "p") {
+    return (
+      <p className="text-[15px] leading-[1.7] text-ink-2">{block.text}</p>
+    );
+  }
+  if (block.kind === "ul") {
+    return (
+      <ul className="space-y-2 pl-1">
+        {block.items.map((item, i) => (
+          <li
+            key={i}
+            className="relative pl-5 text-[14.5px] leading-[1.65] text-ink-2 before:absolute before:left-0 before:top-[10px] before:h-[5px] before:w-[5px] before:rounded-full before:bg-mondrian-blue"
+          >
+            {item}
+          </li>
+        ))}
+      </ul>
+    );
+  }
+  if (block.kind === "callout") {
+    return (
+      <div className="rounded-[10px] border-l-2 border-mondrian-yellow bg-mondrian-yellow-soft px-4 py-3 text-[14px] leading-[1.55] text-ink-2">
+        {block.text}
+      </div>
+    );
+  }
+  return null;
+}
+
+function CloseIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden>
+      <path
+        d="M3 3l10 10M13 3L3 13"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
 }
 
 /* ——————————————————————————————————————— */
