@@ -705,10 +705,10 @@ input[type="range"]::-moz-range-thumb {
 :root.dark {
   color-scheme: dark;
 
-  --color-paper: #0c0c0c;
-  --color-paper-2: #161616;
-  --color-paper-3: #1e1e1e;
-  --color-paper-tint: #111111;
+  --color-paper: #16181d;
+  --color-paper-2: #1f2128;
+  --color-paper-3: #272932;
+  --color-paper-tint: #1a1c22;
   --color-line: rgba(255, 255, 255, 0.08);
   --color-line-strong: rgba(255, 255, 255, 0.14);
   --color-line-glass: rgba(255, 255, 255, 0.06);
@@ -761,9 +761,9 @@ input[type="range"]::-moz-range-thumb {
 
 .dark body {
   background-image:
-    radial-gradient(ellipse 1400px 900px at 0% 0%, rgba(65, 217, 211, 0.26), transparent 65%),
-    radial-gradient(ellipse 1200px 850px at 100% 100%, rgba(65, 217, 211, 0.18), transparent 65%),
-    radial-gradient(circle 750px at 100% 0%, rgba(65, 217, 211, 0.14), transparent 60%);
+    radial-gradient(ellipse 1500px 950px at 0% 0%, rgba(65, 217, 211, 0.32), transparent 65%),
+    radial-gradient(ellipse 1300px 900px at 100% 100%, rgba(65, 217, 211, 0.22), transparent 65%),
+    radial-gradient(circle 800px at 100% 0%, rgba(65, 217, 211, 0.18), transparent 60%);
 }
 
 .dark .glass-nav {

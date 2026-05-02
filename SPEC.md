@@ -45,7 +45,7 @@ Each agent owns a subset of channels and operates autonomously within user-defin
 - **Optimizes for:** top-10 rankings for high-intent keywords
 - **User controls:** article cadence (slider), topic queue (approve/decline)
 
-### AI brief writer (geo)
+### GEO optimizer (geo)
 - **Owns:** ChatGPT, Perplexity, Claude citations
 - **Does:** answer-first briefs structured for LLM extraction, schema markup, citation tracking
 - **Optimizes for:** citations per engine per month
